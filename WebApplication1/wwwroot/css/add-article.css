@@ -1,0 +1,17 @@
+.add-input {
+    display: flex;
+    flex: 1;
+}
+
+.add-lable {
+    display: block;
+}
+
+.add-element {
+    display: flex;
+}
+
+.margin-5 {
+    margin-top: 5px;
+    margin-right: 5px;
+}

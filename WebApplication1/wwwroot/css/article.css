@@ -1,0 +1,16 @@
+.article-div {
+    box-sizing: border-box;
+    padding: 0.5%;
+    border-radius: 10px;
+    height: fit-content;
+    background: paleturquoise;
+    margin-bottom: 5px;
+}
+
+.article-image {
+    width: 100%;
+}
+
+header {
+    margin: 0px;
+}

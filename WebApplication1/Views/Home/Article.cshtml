@@ -1,0 +1,10 @@
+﻿@model ArticleViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<link rel="stylesheet" href="css/article.css?v=2)">
+<div class="article-div">
+    <h1>@Model.title</h1>
+    <img class="article-image" src="@Model.image">
+    @* <img class="article-image" src="@Url.Content(Model.image)"> *@
+    <p>@Model.annotation</p>
+    <p>@Model.addText</p>
+</div>

@@ -1,0 +1,67 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<link rel="stylesheet" href="css/add-article.css">
+<link rel="stylesheet" href="css/article.css">
+<div class="article-div">
+    <div id="add-form" class="addform">
+        <div id="main-part">
+            <label class="add-lable" for="article-name">Название статьи:</label>
+            <div class="add-element">
+                <input id="article-name" class="add-input" type="text" required>
+            </div>
+
+            <label class="add-lable" for="article-main-picture">Ссылка на картинку статьи:</label>
+            <div class="add-element">
+                <input id="article-main-picture" class="add-input" type="text" required>
+            </div>
+
+            <label class="add-lable" for="article-annotation">Аннотация статьи:</label>
+            <div class="add-element">
+                <textarea id="article-annotation" class="add-input" rows="5" required></textarea>
+            </div>
+
+            <label class="add-lable" for="article-tags">Теги:</label>
+            <div 
+                @* class="add-element"  *@
+                @* class="display-inline" *@
+                id="article-tags">
+                @* <select id="article-tags" class="search-select" size="6" name="tags" multiple required> *@
+                <p>Марка:</p>
+                <input class="checkbox-type" type="checkbox" id="1" value="Audi">Audi
+                <input class="checkbox-type" type="checkbox" id="2" value="Ferrari">Ferrari
+                <input class="checkbox-type" type="checkbox" id="3" value="Omoda">Omoda
+                <input class="checkbox-type" type="checkbox" id="4" value="Lamborghini">Lamborghini
+                <p>Период года: </p>
+                <input class="checkbox-type" type="checkbox" id="5" value="зима">зима
+                <input class="checkbox-type" type="checkbox" id="6" value="лето">лето
+                <p>Другие теги:</p>
+                <input class="checkbox-type" type="checkbox" id="7" value="резина">резина
+                <input class="checkbox-type" type="checkbox" id="8" value="полный привод">полный привод
+                <input class="checkbox-type" type="checkbox" id="9" value="Формула 1">Формула 1
+                <input class="checkbox-type" type="checkbox" id="10" value="спорткар">спорткар
+                <input class="checkbox-type" type="checkbox" id="11" value="разное">разное
+
+
+                @* </select> *@
+            </div>
+        </div>
+
+        <label class="add-lable" for="article-author">Автор статьи:</label>
+        <div class="add-element">
+            <input id="article-author" class="add-input" type="text" required>
+        </div>
+
+        <label class="add-lable" for="article-date">Дата написания статьи:</label>
+        <div class="add-element">
+            <input id="article-date" class="add-input" type="date" required>
+        </div>
+                
+        @* <div class="add-element"> *@
+        @*     <button class="nav-button margin-5" type="button" onclick="addTextArea()">Добавить текст</button> *@
+        @*     <button class="nav-button margin-5" type="button" onclick="addImage()">Добавить картинку</button> *@
+        @* </div> *@
+        <!-- <button type="button" onclick="checkForm()">тест</button> -->
+        <input class="nav-button margin-5" type="submit" title="Сохранить статью" onclick="checkForm()">
+    </div>
+</div>
+<script src="js/checkAddFile.js"></script>

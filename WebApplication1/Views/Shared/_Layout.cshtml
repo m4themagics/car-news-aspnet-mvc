@@ -1,0 +1,67 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+
+    @* <meta name="viewport" content="width=device-width, initial-scale=1.0"/> *@
+    <title>@ViewData["Title"] - WebApplication1</title>
+    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/> *@
+    @* <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/> *@
+    @* <link rel="stylesheet" href="~/WebApplication1.styles.css" asp-append-version="true"/> *@
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+<body>
+    <header>
+        <a asp-action="Index"><img src="images/header.png" width="100%"></a>
+                                         
+        <h1 hidden="true">Автомобильные новсти</h1>
+        <nav class="nav-buttons">
+            @* <button class="nav-button" onclick="location.href='/news.html'">Новости</button> *@
+            <a class="nav-button" asp-action="Articles">Статьи</a>
+            @* <button class="nav-button" onclick="location.href='/formula1.html'">Формула 1</button> *@
+        </nav>
+    </header>
+<div class="container">
+    <main role="main" class="pb-3">
+        <div class="search-div">
+            <div>
+                <label for="search-field">Поиск</label>
+                <div class="row">
+                    <input class="input-search" placeholder="Введите запрос" id="search-field" type="search">
+                    <button id="search-button" class="button-search"></button>
+                </div>
+                <p>Все теги</p>
+                <a class="parent-tag" onclick="loadTags(1, 'brand-tags')">Марка</a>
+                <div id="brand-tags"></div>
+                <a class="parent-tag" onclick="loadTags(2, 'age-tags')">Период года</a>
+                <div id="age-tags"></div>
+                <a class="parent-tag" onclick="loadTags(3, 'other-tags')">Другие теги</a>
+                <div id="other-tags"></div>
+            </div>
+        </div>
+        <div id="render-body-div" class="main-div">
+            @RenderBody()
+        </div>
+        <div class="popular-articles-div">
+            <p><a href="/Article/1">Какие шины выбрать на зиму — с шипами или без? Мнение эксперта</a></p>
+            <p><a href="/Article/2">Роберт Шварцман проведёт первую тренировку в Остине</a></p>
+        </div>
+    </main>
+</div>
+<footer class="center-element">
+    <a hidden="true" href="">Контакты</a>
+    <button class="nav-button" onclick="scrollToTop()">Наверх</button>
+    <a class="nav-button" asp-action="AddArticle">Создать статью</a>
+</footer>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="js/scrollToTop.js" type="text/javascript"></script>
+<script src="js/tags.js" type="text/javascript"></script>
+<script src="js/search.js?v=3" type="text/javascript"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

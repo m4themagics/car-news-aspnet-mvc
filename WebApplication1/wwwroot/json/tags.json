@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "name": "Mercedes-Benz",
+        "parentTagId": 1
+    },
+    {
+        "id": 2,
+        "name": "Ferrari",
+        "parentTagId": 1
+    },
+    {
+        "id": 3,
+        "name": "Haval",
+        "parentTagId": 1
+    },
+    {
+        "id": 4,
+        "name": "60-е",
+        "parentTagId": 2
+    },
+    {
+        "id": 5,
+        "name": "70-е",
+        "parentTagId": 2
+    }
+]
