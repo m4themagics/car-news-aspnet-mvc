@@ -1,49 +1,53 @@
-# Car News — новостной портал на ASP.NET
+# Car News — новостной портал на ASP.NET Core MVC
 
-Веб-приложение для публикации и чтения статей об автомобилях: список с постраничной
-подгрузкой, фильтрация по тегам, добавление статей через форму. Данные лежат в PostgreSQL,
-доступ к ним — через собственный слой репозиториев поверх Dapper.
+Веб-приложение для публикации и чтения статей об автомобилях: главная с каруселью,
+каталог статей, страница отдельной статьи, форма добавления. Учебный проект 2023 года.
 
-**Стек:** C# · ASP.NET Core MVC · PostgreSQL · Npgsql · Dapper · FluentMigrator
+**Стек:** C# · ASP.NET Core MVC 6 · Entity Framework Core · Razor · Bootstrap
 
-## Чем интересен слой данных
+## Как устроено
 
-Основная работа здесь не в контроллерах, а в том, как приложение разговаривает с Postgres.
-
-**Композитные типы и `UNNEST`.** Сущности зарегистрированы как композитные типы Postgres
-(`Postgres.MapCompositeTypes`), что позволяет отправлять целую пачку записей одним
-параметром через `UNNEST` вместо построчных `INSERT` в цикле — один round-trip вместо N.
-
-**Трансляция имён.** Подключён `NpgsqlSnakeCaseNameTranslator` вместе с
-`Dapper.DefaultTypeMap.MatchNamesWithUnderscores`, поэтому `PublisherId` в C# и
-`publisher_id` в базе сопоставляются автоматически, без атрибутов над каждым полем.
-
-**Миграции.** Схема версионируется через FluentMigrator и применяется на старте
-приложения — база собирается с нуля одной командой, без ручных SQL-скриптов.
-
-## Структура
+Классическое MVC-разделение с внедрением зависимостей:
 
 ```text
-WebApplication1/
-├── Context/         CarNewsDBContext — точка доступа к данным
-├── Repositories/    ArticleRepository + интерфейс, инъекция через DI
-├── Entities/        Article, Tags — модель хранения
-├── DTO/             ArticleDTO, TagDTO — контракт формы
-├── Models/          ViewModel для представлений
-├── Controllers/     Home, Articles, Tags
-├── Views/           Razor-страницы
-├── Postgres.cs      маппинг композитных типов, регистрация транслятора имён
-└── Program.cs       конфигурация DI, миграций, маршрутов
+Controllers/     Home, Articles, Tags — маршруты и подготовка моделей
+Views/           Razor-страницы: Index, Articles, Article, AddArticle, Privacy
+Models/          ViewModel для представлений
+Entities/        Article, Tags — модель хранения
+DTO/             ArticleDTO, TagDTO — контракт формы добавления
+Repositories/    ArticleRepository за интерфейсом IArticleRepository
+Context/         CarNewsDBContext — DbContext EF Core
+wwwroot/         статика, изображения статей, JSON с исходным контентом
 ```
+
+Доступ к данным идёт через `IArticleRepository`, зарегистрированный в DI
+(`AddTransient<IArticleRepository, ArticleRepository>`) — контроллеры не знают о
+конкретном хранилище. Схема создаётся на старте через `Database.EnsureCreated()`.
+
+## Незавершённые части
+
+В проекте есть заготовка более продвинутого слоя доступа к данным, которая **не
+подключена** и в работе приложения не участвует — оставлена как есть:
+
+- `Postgres.cs` — регистрация сущностей как композитных типов Postgres (`MapCompositeTypes`)
+  и настройка FluentMigrator (`AddMigrations`). Ни один из двух методов ниоткуда не
+  вызывается; классов миграций в проекте нет.
+- Пакеты `Dapper`, `Npgsql`, `FluentMigrator`, `Microsoft.Data.Sqlite` подключены в
+  `.csproj`, но рабочий путь использует только EF Core.
+- В `CarNewsDBContext` и `Program.cs` остались закомментированные варианты на SQLite
+  и seed-данные.
+
+То есть в какой-то момент проект переезжал между хранилищами, и следы этого переезда
+остались в коде.
 
 ## Запуск
 
-Нужны .NET SDK и PostgreSQL.
+Нужен .NET SDK 6.0 и доступная база; строка подключения задаётся в
+`Context/CarNewsDBContext.cs`.
 
 ```bash
-createdb car_news
 dotnet run --project WebApplication1
 ```
 
-Строка подключения задаётся в `appsettings.json` в секции `DalOptions`. Для локального
-запуска подставьте свои учётные данные — в репозитории значений нет.
+Приложение поднимется на порту из `Properties/launchSettings.json`, стартовая
+страница — `Home/Index`.

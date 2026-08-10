@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.Sqlite;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Entities;
 
@@ -8,7 +8,7 @@ public class CarNewsDBContext : DbContext
 {
 
     private static readonly string ConnectionString =
-        "Data Source=SQL8003.site4now.net;Initial Catalog=db_a9820b_carnews;User Id=db_a9820b_carnews_admin;Password=20012009Ob";
+        Environment.GetEnvironmentVariable("CARNEWS_CONNECTION") ?? "";
     public CarNewsDBContext()
     {
     }
