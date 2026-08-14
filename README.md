@@ -1,5 +1,7 @@
 # Car News — новостной портал на ASP.NET Core MVC
 
+![C%23](https://img.shields.io/badge/C%23-10-239120?logo=csharp&logoColor=white) ![ASP.NET%20Core](https://img.shields.io/badge/ASP.NET%20Core-6.0-512BD4?logo=dotnet&logoColor=white) ![EF%20Core](https://img.shields.io/badge/EF%20Core-ORM-512BD4)
+
 Веб-приложение для публикации и чтения статей об автомобилях: главная с каруселью,
 каталог статей, страница отдельной статьи, форма добавления. Учебный проект 2023 года.
 
@@ -23,6 +25,30 @@ wwwroot/         статика, изображения статей, JSON с и
 Доступ к данным идёт через `IArticleRepository`, зарегистрированный в DI
 (`AddTransient<IArticleRepository, ArticleRepository>`) — контроллеры не знают о
 конкретном хранилище. Схема создаётся на старте через `Database.EnsureCreated()`.
+
+## Поток запроса
+
+```mermaid
+flowchart LR
+    B["Браузер"]
+    CTRL["Controllers<br/>Home · Articles · Tags"]
+    REPO["IArticleRepository<br/>внедряется через DI"]
+    IMPL["ArticleRepository"]
+    CTX["CarNewsDBContext<br/>EF Core"]
+    DB[("База данных")]
+    VIEW["Razor Views"]
+
+    B --> CTRL
+    CTRL --> REPO
+    REPO --> IMPL
+    IMPL --> CTX
+    CTX --> DB
+    CTRL --> VIEW
+    VIEW --> B
+```
+
+Контроллеры зависят от интерфейса `IArticleRepository`, а не от его реализации: конкретный
+класс подставляется в `Program.cs` через `AddTransient`.
 
 ## Незавершённые части
 
