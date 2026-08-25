@@ -1,5 +1,7 @@
 # Car News — новостной портал на ASP.NET Core MVC
 
+> **Maintenance status · 2026-08-25: archived coursework, 0 active portfolio hours.**
+
 ![C#](https://img.shields.io/badge/C%23-10-239120?logo=csharp&logoColor=white) ![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-6.0-512BD4?logo=dotnet&logoColor=white) ![EF Core](https://img.shields.io/badge/EF%20Core-ORM-512BD4)
 
 Веб-приложение для публикации и чтения статей об автомобилях: главная с каруселью,
